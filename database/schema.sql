@@ -1,9 +1,7 @@
 -- Base de datos para Cuaderno Digital E.E.S.T. N°2
-CREATE DATABASE IF NOT EXISTS cuaderno_digital_eest2;
-USE cuaderno_digital_eest2;
 
 -- Tabla de usuarios del sistema
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -16,7 +14,7 @@ CREATE TABLE usuarios (
 );
 
 -- Tabla de especialidades
-CREATE TABLE especialidades (
+CREATE TABLE IF NOT EXISTS especialidades (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
@@ -24,15 +22,15 @@ CREATE TABLE especialidades (
 );
 
 -- Tabla de turnos
-CREATE TABLE turnos (
+CREATE TABLE IF NOT EXISTS turnos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL, -- Mañana, Tarde, Contraturno
+    nombre VARCHAR(20) NOT NULL, -- Manana, Tarde, Contraturno
     hora_inicio TIME,
     hora_fin TIME
 );
 
 -- Tabla de talleres
-CREATE TABLE talleres (
+CREATE TABLE IF NOT EXISTS talleres (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     especialidad_id INT,
@@ -41,9 +39,9 @@ CREATE TABLE talleres (
 );
 
 -- Tabla de cursos
-CREATE TABLE cursos (
+CREATE TABLE IF NOT EXISTS cursos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    año INT NOT NULL, -- 1 a 7
+    anio INT NOT NULL, -- 1 a 7
     division VARCHAR(5) NOT NULL, -- A, B, C, etc.
     turno_id INT NOT NULL,
     especialidad_id INT NOT NULL,
@@ -56,7 +54,7 @@ CREATE TABLE cursos (
 );
 
 -- Tabla de estudiantes
-CREATE TABLE estudiantes (
+CREATE TABLE IF NOT EXISTS estudiantes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     dni VARCHAR(20) UNIQUE NOT NULL,
     apellido VARCHAR(100) NOT NULL,
@@ -76,7 +74,7 @@ CREATE TABLE estudiantes (
 );
 
 -- Tabla de responsables
-CREATE TABLE responsables (
+CREATE TABLE IF NOT EXISTS responsables (
     id INT AUTO_INCREMENT PRIMARY KEY,
     estudiante_id INT NOT NULL,
     apellido VARCHAR(100) NOT NULL,
@@ -93,7 +91,7 @@ CREATE TABLE responsables (
 );
 
 -- Tabla de contactos de emergencia
-CREATE TABLE contactos_emergencia (
+CREATE TABLE IF NOT EXISTS contactos_emergencia (
     id INT AUTO_INCREMENT PRIMARY KEY,
     estudiante_id INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
@@ -103,7 +101,7 @@ CREATE TABLE contactos_emergencia (
 );
 
 -- Tabla de equipo directivo
-CREATE TABLE equipo_directivo (
+CREATE TABLE IF NOT EXISTS equipo_directivo (
     id INT AUTO_INCREMENT PRIMARY KEY,
     apellido VARCHAR(100) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
@@ -115,7 +113,7 @@ CREATE TABLE equipo_directivo (
 );
 
 -- Tabla de materias
-CREATE TABLE materias (
+CREATE TABLE IF NOT EXISTS materias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     especialidad_id INT,
@@ -124,7 +122,7 @@ CREATE TABLE materias (
 );
 
 -- Tabla de horarios
-CREATE TABLE horarios (
+CREATE TABLE IF NOT EXISTS horarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     curso_id INT NOT NULL,
     materia_id INT NOT NULL,
@@ -139,7 +137,7 @@ CREATE TABLE horarios (
 );
 
 -- Tabla de inasistencias
-CREATE TABLE inasistencias (
+CREATE TABLE IF NOT EXISTS inasistencias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     estudiante_id INT NOT NULL,
     fecha DATE NOT NULL,
@@ -148,32 +146,32 @@ CREATE TABLE inasistencias (
     motivo TEXT,
     certificado_medico BOOLEAN DEFAULT FALSE,
     observaciones TEXT,
-    usuario_id INT NOT NULL, -- quién registró la inasistencia
+    usuario_id INT NOT NULL, -- quien registro la inasistencia
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
--- Tabla de llamados de atención
-CREATE TABLE llamados_atencion (
+-- Tabla de llamados de atencion
+CREATE TABLE IF NOT EXISTS llamados_atencion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     estudiante_id INT NOT NULL,
     fecha DATE NOT NULL,
     motivo TEXT NOT NULL,
     sancion VARCHAR(100),
     observaciones TEXT,
-    usuario_id INT NOT NULL, -- quién registró el llamado
+    usuario_id INT NOT NULL, -- quien registro el llamado
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
 -- Tabla de materias previas
-CREATE TABLE materias_previas (
+CREATE TABLE IF NOT EXISTS materias_previas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     estudiante_id INT NOT NULL,
     materia_id INT NOT NULL,
-    año_previo INT NOT NULL,
+    anio_previo INT NOT NULL,
     estado ENUM('pendiente', 'regularizada', 'aprobada') DEFAULT 'pendiente',
     observaciones TEXT,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -182,7 +180,7 @@ CREATE TABLE materias_previas (
 );
 
 -- Tabla de archivos adjuntos
-CREATE TABLE archivos_adjuntos (
+CREATE TABLE IF NOT EXISTS archivos_adjuntos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     estudiante_id INT NOT NULL,
     tipo ENUM('certificado_medico', 'constancia', 'otro') NOT NULL,
@@ -197,15 +195,15 @@ CREATE TABLE archivos_adjuntos (
 
 -- Insertar datos iniciales
 INSERT INTO turnos (nombre, hora_inicio, hora_fin) VALUES 
-('Mañana', '07:30:00', '12:30:00'),
+('Manana', '07:30:00', '12:30:00'),
 ('Tarde', '13:30:00', '18:30:00'),
 ('Contraturno', '18:30:00', '22:30:00');
 
 INSERT INTO especialidades (nombre, descripcion) VALUES 
-('Informática', 'Especialidad en programación y sistemas'),
-('Electromecánica', 'Especialidad en mecánica y electricidad'),
-('Construcciones', 'Especialidad en construcción civil'),
-('Química', 'Especialidad en procesos químicos');
+('Informatica', 'Especialidad en programacion y sistemas'),
+('Electromecanica', 'Especialidad en mecanica y electricidad'),
+('Construcciones', 'Especialidad en construccion civil'),
+('Quimica', 'Especialidad en procesos quimicos');
 
 INSERT INTO usuarios (username, password, nombre, apellido, email, rol) VALUES 
 ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrador', 'Sistema', 'admin@eest2.edu.ar', 'admin'); 
