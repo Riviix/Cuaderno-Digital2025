@@ -186,7 +186,6 @@ $llamados = $db->fetchAll("
                         <th>Fecha</th>
                         <th>Estudiante</th>
                         <th>Curso</th>
-                        <th>Tipo</th>
                         <th>Motivo</th>
                         <th>Sanción</th>
                     </tr>
@@ -197,7 +196,6 @@ $llamados = $db->fetchAll("
                         <td><?php echo htmlspecialchars($l['fecha']); ?></td>
                         <td><?php echo htmlspecialchars($l['apellido'] . ', ' . $l['nombre']); ?></td>
                         <td><?php echo $l['anio'] . '° ' . $l['division'] . ' - ' . $l['especialidad']; ?></td>
-                        <td><?php echo htmlspecialchars($l['tipo']); ?></td>
                         <td><?php echo htmlspecialchars($l['motivo']); ?></td>
                         <td><?php echo htmlspecialchars($l['sancion']); ?></td>
                     </tr>

@@ -12,18 +12,16 @@ $estudiante_id = $_GET['estudiante'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_llamado'])) {
     $estudiante_id = $_POST['estudiante_id'];
     $fecha = $_POST['fecha'];
-    $tipo = $_POST['tipo'];
     $motivo = $_POST['motivo'];
-    $descripcion = $_POST['descripcion'];
+    $descripcion = $_POST['descripcion']; // Descripción del hecho
     $sancion = $_POST['sancion'] ?? '';
-    $observaciones = $_POST['observaciones'] ?? '';
     $usuario_id = $_SESSION['user_id'];
 
     try {
         $db->query("
-            INSERT INTO llamados_atencion (estudiante_id, fecha, tipo, motivo, descripcion, sancion, observaciones, usuario_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ", [$estudiante_id, $fecha, $tipo, $motivo, $descripcion, $sancion, $observaciones, $usuario_id]);
+            INSERT INTO llamados_atencion (estudiante_id, fecha, motivo, sancion, observaciones, usuario_id)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ", [$estudiante_id, $fecha, $motivo, $sancion, $descripcion, $usuario_id]);
         
         $success_message = "Llamado de atención registrado correctamente";
     } catch (Exception $e) {
@@ -34,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_llamado']))
 // Filtros para el listado
 $fecha_desde = $_GET['fecha_desde'] ?? date('Y-m-01');
 $fecha_hasta = $_GET['fecha_hasta'] ?? date('Y-m-d');
-$tipo_filter = $_GET['tipo'] ?? '';
 $motivo_filter = $_GET['motivo'] ?? '';
 
 // Construir consulta con filtros
@@ -49,11 +46,6 @@ if ($fecha_desde) {
 if ($fecha_hasta) {
     $where_conditions[] = "l.fecha <= ?";
     $params[] = $fecha_hasta;
-}
-
-if ($tipo_filter) {
-    $where_conditions[] = "l.tipo = ?";
-    $params[] = $tipo_filter;
 }
 
 if ($motivo_filter) {
@@ -103,10 +95,10 @@ $llamados_hoy = $db->fetch("
     SELECT COUNT(*) as total FROM llamados_atencion WHERE fecha = CURDATE()
 ")['total'];
 
-$llamados_graves = $db->fetch("
+$llamados_con_sancion = $db->fetch("
     SELECT COUNT(*) as total FROM llamados_atencion l
     JOIN estudiantes e ON l.estudiante_id = e.id
-    WHERE $where_clause AND l.tipo = 'grave'
+    WHERE $where_clause AND l.sancion IS NOT NULL AND l.sancion != ''
 ", $params)['total'];
 ?>
 
@@ -153,8 +145,8 @@ $llamados_graves = $db->fetch("
                 <i class="fas fa-exclamation-circle"></i>
             </div>
             <div class="stat-content">
-                <h3><?php echo $llamados_graves; ?></h3>
-                <p>Llamados Graves</p>
+                <h3><?php echo $llamados_con_sancion; ?></h3>
+                <p>Llamados con Sanción</p>
             </div>
         </div>
     </div>
@@ -186,38 +178,9 @@ $llamados_graves = $db->fetch("
                 </div>
                 
                 <div class="form-group">
-                    <label for="tipo">Tipo:</label>
-                    <select name="tipo" id="tipo" required>
-                        <option value="">Seleccionar tipo</option>
-                        <option value="leve">Leve</option>
-                        <option value="moderado">Moderado</option>
-                        <option value="grave">Grave</option>
-                        <option value="muy_grave">Muy Grave</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
                     <label for="motivo">Motivo:</label>
                     <select name="motivo" id="motivo" required>
                         <option value="">Seleccionar motivo</option>
-                        <option value="Falta de respeto">Falta de respeto</option>
-                        <option value="Agresión verbal">Agresión verbal</option>
-                        <option value="Agresión física">Agresión física</option>
-                        <option value="Uso de celular">Uso de celular</option>
-                        <option value="Falta de material">Falta de material</option>
-                        <option value="Comportamiento disruptivo">Comportamiento disruptivo</option>
-                        <option value="Falta de higiene">Falta de higiene</option>
-                        <option value="Incumplimiento de normas">Incumplimiento de normas</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="sancion">Sanción Aplicada:</label>
-                    <select name="sancion" id="sancion">
-                        <option value="">Sin sanción</option>
                         <option value="Amonestación verbal">Amonestación verbal</option>
                         <option value="Amonestación escrita">Amonestación escrita</option>
                         <option value="Suspensión 1 día">Suspensión 1 día</option>
@@ -232,13 +195,25 @@ $llamados_graves = $db->fetch("
             
             <div class="form-row">
                 <div class="form-group">
-                    <label for="descripcion">Descripción del Hecho:</label>
+                    <label for="descripcion">Descripción:</label>
                     <textarea name="descripcion" id="descripcion" placeholder="Describir detalladamente lo ocurrido" required></textarea>
                 </div>
-                
+            </div>
+            
+            <div class="form-row">
                 <div class="form-group">
-                    <label for="observaciones">Observaciones:</label>
-                    <textarea name="observaciones" id="observaciones" placeholder="Observaciones adicionales"></textarea>
+                    <label for="sancion">Sanción Aplicada:</label>
+                    <select name="sancion" id="sancion">
+                        <option value="">Sin sanción</option>
+                        <option value="Amonestación verbal">Amonestación verbal</option>
+                        <option value="Amonestación escrita">Amonestación escrita</option>
+                        <option value="Suspensión 1 día">Suspensión 1 día</option>
+                        <option value="Suspensión 3 días">Suspensión 3 días</option>
+                        <option value="Suspensión 5 días">Suspensión 5 días</option>
+                        <option value="Suspensión 10 días">Suspensión 10 días</option>
+                        <option value="Expulsión">Expulsión</option>
+                        <option value="Otro">Otro</option>
+                    </select>
                 </div>
             </div>
             
@@ -271,17 +246,6 @@ $llamados_graves = $db->fetch("
                     <label for="fecha_hasta">Fecha Hasta:</label>
                     <input type="date" name="fecha_hasta" id="fecha_hasta" 
                            value="<?php echo htmlspecialchars($fecha_hasta); ?>">
-                </div>
-                
-                <div class="form-group">
-                    <label for="tipo_filter">Tipo:</label>
-                    <select name="tipo" id="tipo_filter">
-                        <option value="">Todos los tipos</option>
-                        <option value="leve" <?php echo $tipo_filter === 'leve' ? 'selected' : ''; ?>>Leve</option>
-                        <option value="moderado" <?php echo $tipo_filter === 'moderado' ? 'selected' : ''; ?>>Moderado</option>
-                        <option value="grave" <?php echo $tipo_filter === 'grave' ? 'selected' : ''; ?>>Grave</option>
-                        <option value="muy_grave" <?php echo $tipo_filter === 'muy_grave' ? 'selected' : ''; ?>>Muy Grave</option>
-                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -320,7 +284,6 @@ $llamados_graves = $db->fetch("
                         <th>Fecha</th>
                         <th>Estudiante</th>
                         <th>Curso</th>
-                        <th>Tipo</th>
                         <th>Motivo</th>
                         <th>Sanción</th>
                         <th>Registrado por</th>
@@ -336,20 +299,6 @@ $llamados_graves = $db->fetch("
                             <small>DNI: <?php echo htmlspecialchars($llamado['dni']); ?></small>
                         </td>
                         <td><?php echo $llamado['anio'] . '° ' . $llamado['division'] . ' - ' . $llamado['especialidad']; ?></td>
-                        <td>
-                            <?php 
-                            $tipo_class = '';
-                            switch($llamado['tipo']) {
-                                case 'leve': $tipo_class = 'success'; break;
-                                case 'moderado': $tipo_class = 'warning'; break;
-                                case 'grave': $tipo_class = 'danger'; break;
-                                case 'muy_grave': $tipo_class = 'danger'; break;
-                            }
-                            ?>
-                            <span class="status status-<?php echo $tipo_class; ?>">
-                                <?php echo ucfirst($llamado['tipo']); ?>
-                            </span>
-                        </td>
                         <td><?php echo htmlspecialchars($llamado['motivo']); ?></td>
                         <td>
                             <?php if ($llamado['sancion']): ?>

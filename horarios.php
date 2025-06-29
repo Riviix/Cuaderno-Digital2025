@@ -12,30 +12,29 @@ $turno = $_GET['turno'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar_horario'])) {
     $curso_id = $_POST['curso_id'];
     $materia_id = $_POST['materia_id'];
-    $dia = $_POST['dia'];
+    $dia_semana = $_POST['dia_semana'];
     $hora_inicio = $_POST['hora_inicio'];
     $hora_fin = $_POST['hora_fin'];
     $aula = $_POST['aula'] ?? '';
     $docente = $_POST['docente'] ?? '';
-    $usuario_id = $_SESSION['user_id'];
 
     try {
         // Verificar si ya existe un horario para ese curso, día y hora
         $existe = $db->fetch("
             SELECT id FROM horarios 
-            WHERE curso_id = ? AND dia = ? AND 
+            WHERE curso_id = ? AND dia_semana = ? AND 
                   ((hora_inicio <= ? AND hora_fin > ?) OR 
                    (hora_inicio < ? AND hora_fin >= ?) OR
                    (hora_inicio >= ? AND hora_fin <= ?))
-        ", [$curso_id, $dia, $hora_inicio, $hora_inicio, $hora_fin, $hora_fin, $hora_inicio, $hora_fin]);
+        ", [$curso_id, $dia_semana, $hora_inicio, $hora_inicio, $hora_fin, $hora_fin, $hora_inicio, $hora_fin]);
         
         if ($existe) {
             $error_message = "Ya existe un horario para ese curso en el día y horario seleccionado";
         } else {
             $db->query("
-                INSERT INTO horarios (curso_id, materia_id, dia, hora_inicio, hora_fin, aula, docente, usuario_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ", [$curso_id, $materia_id, $dia, $hora_inicio, $hora_fin, $aula, $docente, $usuario_id]);
+                INSERT INTO horarios (curso_id, materia_id, dia_semana, hora_inicio, hora_fin, aula, docente)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ", [$curso_id, $materia_id, $dia_semana, $hora_inicio, $hora_fin, $aula, $docente]);
             
             $success_message = "Horario guardado correctamente";
         }
@@ -55,9 +54,8 @@ $cursos = $db->fetchAll("
 ");
 
 $materias = $db->fetchAll("
-    SELECT id, nombre, descripcion
+    SELECT id, nombre
     FROM materias
-    WHERE activa = 1
     ORDER BY nombre
 ");
 
@@ -79,27 +77,28 @@ $where_clause = implode(" AND ", $where_conditions);
 
 $horarios = $db->fetchAll("
     SELECT h.*, m.nombre as materia_nombre, c.anio, c.division, esp.nombre as especialidad,
-           t.nombre as turno_nombre, u.nombre as usuario_nombre, u.apellido as usuario_apellido
+           t.nombre as turno_nombre
     FROM horarios h
     LEFT JOIN materias m ON h.materia_id = m.id
     LEFT JOIN cursos c ON h.curso_id = c.id
     LEFT JOIN especialidades esp ON c.especialidad_id = esp.id
     LEFT JOIN turnos t ON c.turno_id = t.id
-    LEFT JOIN usuarios u ON h.usuario_id = u.id
     WHERE $where_clause
-    ORDER BY c.anio, c.division, h.dia, h.hora_inicio
+    ORDER BY c.anio, c.division, h.dia_semana, h.hora_inicio
 ", $params);
 
 // Organizar horarios por día
 $horarios_por_dia = [];
-$dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+$dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+$dias_numeros = [1, 2, 3, 4, 5, 6];
 
-foreach ($dias as $dia) {
+foreach ($dias as $index => $dia) {
     $horarios_por_dia[$dia] = [];
 }
 
 foreach ($horarios as $horario) {
-    $horarios_por_dia[$horario['dia']][] = $horario;
+    $dia_nombre = $dias[$horario['dia_semana'] - 1] ?? 'Desconocido';
+    $horarios_por_dia[$dia_nombre][] = $horario;
 }
 
 // Estadísticas
@@ -109,7 +108,7 @@ $cursos_con_horario = $db->fetch("
 ")['total'];
 
 $materias_activas = $db->fetch("
-    SELECT COUNT(*) as total FROM materias WHERE activa = 1
+    SELECT COUNT(*) as total FROM materias
 ")['total'];
 ?>
 
@@ -196,15 +195,15 @@ $materias_activas = $db->fetch("
                 </div>
                 
                 <div class="form-group">
-                    <label for="dia">Día:</label>
-                    <select name="dia" id="dia" required>
+                    <label for="dia_semana">Día:</label>
+                    <select name="dia_semana" id="dia_semana" required>
                         <option value="">Seleccionar día</option>
-                        <option value="Lunes">Lunes</option>
-                        <option value="Martes">Martes</option>
-                        <option value="Miércoles">Miércoles</option>
-                        <option value="Jueves">Jueves</option>
-                        <option value="Viernes">Viernes</option>
-                        <option value="Sábado">Sábado</option>
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miercoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <option value="6">Sabado</option>
                     </select>
                 </div>
             </div>
@@ -267,9 +266,9 @@ $materias_activas = $db->fetch("
                     <label for="turno_filter">Turno:</label>
                     <select name="turno" id="turno_filter">
                         <option value="">Todos los turnos</option>
-                        <option value="Mañana" <?php echo $turno === 'Mañana' ? 'selected' : ''; ?>>Mañana</option>
+                        <option value="Manana" <?php echo $turno === 'Manana' ? 'selected' : ''; ?>>Manana</option>
                         <option value="Tarde" <?php echo $turno === 'Tarde' ? 'selected' : ''; ?>>Tarde</option>
-                        <option value="Noche" <?php echo $turno === 'Noche' ? 'selected' : ''; ?>>Noche</option>
+                        <option value="Contraturno" <?php echo $turno === 'Contraturno' ? 'selected' : ''; ?>>Contraturno</option>
                     </select>
                 </div>
             </div>

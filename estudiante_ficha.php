@@ -64,7 +64,7 @@ $llamados = $db->fetchAll("
 
 // Obtener materias previas
 $materias_previas = $db->fetchAll("
-    SELECT mp.*, m.nombre as materia_nombre, m.descripcion as materia_descripcion
+    SELECT mp.*, m.nombre as materia_nombre
     FROM materias_previas mp
     LEFT JOIN materias m ON mp.materia_id = m.id
     WHERE mp.estudiante_id = ?
@@ -439,7 +439,7 @@ $previas_pendientes = $db->fetch("
                                         <?php echo ucfirst($previa['estado']); ?>
                                     </span>
                                 </td>
-                                <td><?php echo htmlspecialchars($previa['materia_descripcion'] ?? '-'); ?></td>
+                                <td><?php echo htmlspecialchars($previa['observaciones'] ?? '-'); ?></td>
                             </tr>
                             <?php endforeach; ?>
                             <?php if (empty($materias_previas)): ?>

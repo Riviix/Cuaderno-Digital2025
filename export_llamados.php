@@ -38,13 +38,12 @@ if ($type === 'csv') {
     fputcsv($output, ['Escuela de Educación Secundaria Técnica N°2 - Mar del Plata']);
     fputcsv($output, ["Reporte de Llamados de Atención", "Fecha de generación: $fecha"]);
     fputcsv($output, []);
-    fputcsv($output, ['Fecha', 'Estudiante', 'Curso', 'Tipo', 'Motivo', 'Sanción']);
+    fputcsv($output, ['Fecha', 'Estudiante', 'Curso', 'Motivo', 'Sanción']);
     foreach ($llamados as $l) {
         fputcsv($output, [
             $l['fecha'],
             $l['apellido'] . ', ' . $l['nombre'],
             $l['anio'] . '° ' . $l['division'] . ' - ' . $l['especialidad'],
-            $l['tipo'],
             $l['motivo'],
             $l['sancion']
         ]);
@@ -57,9 +56,9 @@ if ($type === 'csv') {
     echo "%PDF-1.4\n";
     echo "Llamados de Atención - E.E.S.T N°2\n";
     echo "Fecha de generación: $fecha\n\n";
-    echo "Fecha | Estudiante | Curso | Tipo | Motivo | Sanción\n";
+    echo "Fecha | Estudiante | Curso | Motivo | Sanción\n";
     foreach ($llamados as $l) {
-        echo $l['fecha'] . ' | ' . $l['apellido'] . ', ' . $l['nombre'] . ' | ' . $l['anio'] . '° ' . $l['division'] . ' - ' . $l['especialidad'] . ' | ' . $l['tipo'] . ' | ' . $l['motivo'] . ' | ' . $l['sancion'] . "\n";
+        echo $l['fecha'] . ' | ' . $l['apellido'] . ', ' . $l['nombre'] . ' | ' . $l['anio'] . '° ' . $l['division'] . ' - ' . $l['especialidad'] . ' | ' . $l['motivo'] . ' | ' . $l['sancion'] . "\n";
     }
     exit;
 } 
