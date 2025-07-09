@@ -1,7 +1,10 @@
 <?php 
 $pageTitle = 'Estudiantes - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php'; 
-
+require_once 'includes/auto_seed.php';
+?>
+<main class="main-content">
+<?php
 require_once 'config/database.php';
 $db = Database::getInstance();
 
@@ -331,4 +334,5 @@ $especialidades = $db->fetchAll("SELECT * FROM especialidades WHERE activa = 1 O
 }
 </style>
 
+</main>
 <?php include 'includes/footer.php'; ?> 

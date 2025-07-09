@@ -2,6 +2,8 @@
 $pageTitle = 'Llamados de Atención - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php'; 
 
+require_once 'includes/auto_seed.php';
+
 require_once 'config/database.php';
 $db = Database::getInstance();
 
@@ -102,6 +104,7 @@ $llamados_con_sancion = $db->fetch("
 ", $params)['total'];
 ?>
 
+<main class="main-content">
 <section class="llamados-section">
     <div class="section-header">
         <h2>Gestión de Llamados de Atención</h2>
@@ -347,4 +350,5 @@ $llamados_con_sancion = $db->fetch("
 }
 </style>
 
+</main>
 <?php include 'includes/footer.php'; ?> 

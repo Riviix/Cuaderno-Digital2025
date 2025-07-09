@@ -1,4 +1,5 @@
 <?php
+require_once 'includes/auto_seed.php';
 $pageTitle = 'Reportes - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php';
 require_once 'config/database.php';
@@ -59,6 +60,7 @@ $llamados = $db->fetchAll("
     LIMIT 200
 ", $params_llam);
 ?>
+<main class="main-content">
 <section class="reportes-section">
     <div class="section-header">
         <h2>Reportes</h2>
@@ -221,4 +223,5 @@ $llamados = $db->fetchAll("
 .tab-content.active { display: block; }
 .export-actions { margin: 20px 0; display: flex; gap: 10px; }
 </style>
+</main>
 <?php include 'includes/footer.php'; ?> 

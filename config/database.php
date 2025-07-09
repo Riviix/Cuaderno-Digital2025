@@ -1,10 +1,15 @@
 <?php
-// Configuración de la base de datos
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'cuaderno_digital_eest2');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+// Intentar cargar configuración principal, si falla usar la simplificada
+if (file_exists(__DIR__ . '/config.php')) {
+    require_once __DIR__ . '/config.php';
+} else {
+    require_once __DIR__ . '/config_simple.php';
+}
 
+/**
+ * Clase Database - Singleton para manejo de conexiones a base de datos
+ * Implementa prepared statements para prevenir SQL injection
+ */
 class Database {
     private static $instance = null;
     private $connection;
