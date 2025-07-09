@@ -1,7 +1,10 @@
 <?php 
 $pageTitle = 'Ficha del Estudiante - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php'; 
-
+require_once 'includes/auto_seed.php';
+?>
+<main class="main-content">
+<?php
 require_once 'config/database.php';
 $db = Database::getInstance();
 
@@ -595,4 +598,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+</main>
 <?php include 'includes/footer.php'; ?> 

@@ -193,6 +193,22 @@ CREATE TABLE IF NOT EXISTS archivos_adjuntos (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
+-- Tabla de logins (actividad de inicio de sesión)
+CREATE TABLE IF NOT EXISTS logins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+-- Tabla de logouts (actividad de cierre de sesión)
+CREATE TABLE IF NOT EXISTS logouts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
 -- Insertar datos iniciales
 INSERT INTO turnos (nombre, hora_inicio, hora_fin) VALUES 
 ('Manana', '07:30:00', '12:30:00'),

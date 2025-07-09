@@ -2,6 +2,8 @@
 $pageTitle = 'Cursos - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php'; 
 
+require_once 'includes/auto_seed.php';
+
 require_once 'config/database.php';
 $db = Database::getInstance();
 
@@ -72,6 +74,7 @@ $cursos_por_anio = $db->fetchAll("
 ");
 ?>
 
+<main class="main-content">
 <section class="cursos-section">
     <div class="section-header">
         <h2>Gestión de Cursos</h2>
@@ -321,4 +324,5 @@ $cursos_por_anio = $db->fetchAll("
 }
 </style>
 
+</main>
 <?php include 'includes/footer.php'; ?> 
