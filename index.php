@@ -1,135 +1,10 @@
-<?php
-/**
- * Página principal del Cuaderno Digital EEST N°2
- * Redirige al sistema apropiado según la configuración
- */
-
-require_once 'includes/auto_seed.php';
-
-// Verificar si la base de datos está configurada
-$dbConfigured = false;
-try {
-    require_once 'config/database.php';
-    $db = Database::getInstance();
-    $dbConfigured = true;
-} catch (Exception $e) {
-    $dbConfigured = false;
-}
-
-// Si la base de datos no está configurada, mostrar página de configuración
-if (!$dbConfigured) {
-    ?>
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cuaderno Digital EEST N°2 - Configuración</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background: #f4f4f4;
-                margin: 0;
-                padding: 20px;
-            }
-            .container {
-                max-width: 800px;
-                margin: 50px auto;
-                background: white;
-                padding: 40px;
-                border-radius: 10px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            }
-            .header {
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            .header h1 {
-                color: #007bff;
-                margin-bottom: 10px;
-            }
-            .btn {
-                display: inline-block;
-                background: #007bff;
-                color: white;
-                padding: 12px 24px;
-                text-decoration: none;
-                border-radius: 5px;
-                margin: 10px;
-                font-weight: bold;
-            }
-            .btn:hover {
-                background: #0056b3;
-            }
-            .btn-success {
-                background: #28a745;
-            }
-            .btn-success:hover {
-                background: #218838;
-            }
-            .warning {
-                background: #fff3cd;
-                border: 1px solid #ffeaa7;
-                color: #856404;
-                padding: 15px;
-                border-radius: 5px;
-                margin: 20px 0;
-            }
-            .info {
-                background: #d1ecf1;
-                border: 1px solid #bee5eb;
-                color: #0c5460;
-                padding: 15px;
-                border-radius: 5px;
-                margin: 20px 0;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <h1>Cuaderno Digital EEST N°2</h1>
-                <p>Sistema de Gestión Escolar</p>
-            </div>
-
-            <div class="warning">
-                <strong>⚠️ Base de datos no configurada</strong><br>
-                El sistema requiere que la base de datos esté configurada.
-            </div>
-
-            <div class="info">
-                <h3>Configurar Base de Datos:</h3>
-                <a href="setup_dev.php" class="btn btn-success">Configurar Desarrollo</a>
-                
-                <h3>Instalación Completa:</h3>
-                <a href="install.php" class="btn">Instalación Completa</a>
-            </div>
-
-            <div class="info">
-                <h3>Pasos para configurar la base de datos:</h3>
-                <ol>
-                    <li>Asegúrate de que XAMPP esté ejecutándose (Apache + MySQL)</li>
-                    <li>Ve a phpMyAdmin: <a href="http://localhost/phpmyadmin" target="_blank">http://localhost/phpmyadmin</a></li>
-                    <li>Crea una base de datos llamada: <code>cuaderno_digital_eest2</code></li>
-                    <li>Importa el archivo: <code>database/schema.sql</code></li>
-                    <li>Importa el archivo: <code>create_all_users.sql</code> (para crear usuarios)</li>
-                    <li>Importa el archivo: <code>insert_test_data.sql</code> (datos de prueba opcional)</li>
-                    <li>Ejecuta <a href="setup_dev.php">setup_dev.php</a> para configurar el entorno</li>
-                </ol>
-            </div>
-        </div>
-    </body>
-    </html>
-    <?php
-    exit();
-}
-
-// Si la base de datos está configurada, continuar con el sistema principal
+<?php 
 $pageTitle = 'Dashboard - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php'; 
-?>
-<main class="main-content">
-<?php
+
+require_once 'config/database.php';
+$db = Database::getInstance();
+
 // Obtener estadísticas del dashboard
 $stats = [];
 
@@ -394,5 +269,4 @@ $llamados_recientes = $db->fetchAll("
     </div>
 </section>
 
-</main>
 <?php include 'includes/footer.php'; ?>

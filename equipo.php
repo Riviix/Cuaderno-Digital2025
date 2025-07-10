@@ -1,5 +1,4 @@
 <?php
-require_once 'includes/auto_seed.php';
 $pageTitle = 'Equipo Directivo - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php';
 require_once 'config/database.php';
@@ -68,7 +67,6 @@ $equipo = $db->fetchAll("SELECT ed.*, u.username, u.rol FROM equipo_directivo ed
 $usuarios = $db->fetchAll("SELECT id, username, nombre, apellido, rol FROM usuarios WHERE activo = 1 ORDER BY apellido, nombre");
 
 ?>
-<main class="main-content">
 <section class="equipo-section">
     <div class="section-header">
         <h2>Equipo Directivo</h2>
@@ -177,5 +175,4 @@ $usuarios = $db->fetchAll("SELECT id, username, nombre, apellido, rol FROM usuar
     </div>
     <?php endif; ?>
 </section>
-</main>
 <?php include 'includes/footer.php'; ?> 
