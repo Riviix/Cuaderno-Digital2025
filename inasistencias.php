@@ -2,8 +2,6 @@
 $pageTitle = 'Inasistencias - Cuaderno Digital E.E.S.T N°2';
 include 'includes/header.php'; 
 
-require_once 'includes/auto_seed.php';
-
 require_once 'config/database.php';
 $db = Database::getInstance();
 
@@ -126,7 +124,6 @@ $justificadas = $db->fetch("
 ", $params)['total'];
 ?>
 
-<main class="main-content">
 <section class="inasistencias-section">
     <div class="section-header">
         <h2>Gestión de Inasistencias</h2>
@@ -405,5 +402,4 @@ $justificadas = $db->fetch("
 }
 </style>
 
-</main>
 <?php include 'includes/footer.php'; ?> 

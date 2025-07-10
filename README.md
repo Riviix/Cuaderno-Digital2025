@@ -1,250 +1,282 @@
-# Cuaderno Digital EEST N°2
+# 📚 Cuaderno Digital E.E.S.T N°2
 
-Sistema de Gestión Escolar para la Escuela de Educación Secundaria Técnica N°2 "Educación y Trabajo".
+[![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-## 🚀 Características
+> **Sistema Integral de Gestión Escolar** - Una plataforma completa para la administración académica de la Escuela de Educación Secundaria Técnica N°2
 
-- **Gestión de Estudiantes**: Registro y seguimiento completo de estudiantes
-- **Control de Inasistencias**: Registro y reportes de faltas
-- **Llamados de Atención**: Seguimiento de conductas
-- **Reportes**: Generación de informes detallados
-- **Gestión de Cursos**: Administración de cursos y divisiones
-- **Sistema de Usuarios**: Control de acceso por roles
-- **Interfaz Responsiva**: Diseño moderno y adaptable
+## 🎯 Descripción del Proyecto
 
-## 🔒 Mejoras de Seguridad Implementadas
+El **Cuaderno Digital E.E.S.T N°2** es una aplicación web desarrollada en PHP que revoluciona la gestión administrativa de la escuela. Este sistema integral permite a directivos, preceptores y secretarias manejar de manera eficiente toda la información académica, desde el registro de estudiantes hasta la generación de reportes detallados.
 
-### Autenticación y Autorización
-- **Sesiones Seguras**: Regeneración de ID de sesión, timeout automático
-- **Rate Limiting**: Protección contra ataques de fuerza bruta
-- **Validación de IP**: Verificación de dirección IP en sesiones
-- **Tokens CSRF**: Protección contra ataques Cross-Site Request Forgery
-- **Hashing Seguro**: Uso de Argon2id para contraseñas
+### ✨ Características Principales
 
-### Protección de Datos
-- **Sanitización**: Limpieza automática de datos de entrada
-- **Validación**: Verificación estricta de tipos y formatos
-- **Escape HTML**: Prevención de XSS
-- **Prepared Statements**: Protección contra SQL Injection
+- 🏫 **Gestión Completa de Estudiantes**: Registro, fichas personales y seguimiento académico
+- 📊 **Control de Asistencia**: Registro de inasistencias con justificaciones y certificados médicos
+- ⚠️ **Llamados de Atención**: Sistema de seguimiento disciplinario
+- 📅 **Horarios Dinámicos**: Gestión de horarios por turno y contraturno
+- 👥 **Equipo Directivo**: Información del personal administrativo
+- 📈 **Reportes Avanzados**: Generación de estadísticas y exportación de datos
+- 🔐 **Sistema de Roles**: Acceso diferenciado por tipo de usuario
 
-### Seguridad del Servidor
-- **Headers de Seguridad**: CSP, X-Frame-Options, X-XSS-Protection
-- **Protección de Archivos**: Restricción de acceso a archivos sensibles
-- **Logs de Seguridad**: Registro de actividades y intentos de acceso
-- **Manejo de Errores**: Páginas de error personalizadas
+## 🚀 Funcionalidades Detalladas
+
+### 📋 Gestión de Estudiantes
+- **Registro completo** con datos personales, médicos y de contacto
+- **Fichas individuales** con historial académico completo
+- **Responsables y contactos de emergencia**
+- **Fotos de estudiantes** para identificación rápida
+- **Estado activo/inactivo** para control de matrícula
+
+### 📊 Control de Asistencia
+- **Registro de inasistencias** por tipo (completa, tarde, retiro anticipado)
+- **Justificaciones** con certificados médicos
+- **Observaciones detalladas** por parte del personal
+- **Historial completo** de faltas por estudiante
+- **Exportación de datos** para análisis
+
+### ⚠️ Sistema Disciplinario
+- **Llamados de atención** con motivos y sanciones
+- **Seguimiento temporal** de incidentes
+- **Observaciones detalladas** del personal
+- **Reportes de conducta** por estudiante
+
+### 📅 Gestión de Horarios
+- **Horarios por curso** y turno
+- **Contraturnos** para actividades especiales
+- **Asignación de aulas** y docentes
+- **Visualización por día** de la semana
+
+### 👥 Equipo Directivo
+- **Información del personal** administrativo
+- **Cargos y responsabilidades**
+- **Datos de contacto** profesionales
+- **Fotos del equipo** para identificación
+
+### 📈 Reportes y Estadísticas
+- **Dashboard principal** con métricas en tiempo real
+- **Estadísticas por turno** (mañana, tarde, contraturno)
+- **Reportes de inasistencias** filtrables por fecha
+- **Análisis de llamados** de atención
+- **Exportación a Excel** para análisis externo
+
+## 🛠️ Tecnologías Utilizadas
+
+### Backend
+- **PHP 8.0+** - Lenguaje principal del servidor
+- **MySQL 8.0+** - Base de datos relacional
+- **PDO** - Acceso seguro a la base de datos
+- **Sesiones PHP** - Autenticación y autorización
+
+### Frontend
+- **HTML5** - Estructura semántica
+- **CSS3** - Estilos y diseño responsivo
+- **JavaScript** - Interactividad del cliente
+- **Font Awesome** - Iconografía profesional
+
+### Base de Datos
+- **MySQL** - Sistema de gestión de base de datos
+- **Relaciones complejas** entre entidades
+- **Índices optimizados** para consultas rápidas
+- **Integridad referencial** garantizada
 
 ## 📁 Estructura del Proyecto
 
 ```
 Cuaderno-Digital2025-main/
-├── config/                 # Configuración de la aplicación
-│   ├── config.php         # Configuración principal
-│   ├── database.php       # Conexión a base de datos
-│   └── env.example        # Variables de entorno (ejemplo)
-├── includes/              # Archivos de inclusión
-│   ├── auth.php          # Sistema de autenticación
-│   ├── Security.php      # Clase de seguridad
-│   ├── Logger.php        # Sistema de logs
-│   ├── header.php        # Header común
-│   └── footer.php        # Footer común
-├── errors/               # Páginas de error
-│   ├── 403.php          # Acceso denegado
-│   ├── 404.php          # Página no encontrada
-│   └── 500.php          # Error interno
-├── logs/                 # Archivos de log (generado automáticamente)
-├── uploads/              # Archivos subidos (generado automáticamente)
-├── css/                  # Estilos CSS
-├── img/                  # Imágenes
-├── database/             # Scripts de base de datos
-├── .htaccess            # Configuración de Apache
-├── index.php            # Página principal
-├── login.php            # Página de login
-├── logout.php           # Cierre de sesión
-├── profile.php          # Perfil de usuario
-├── check_session.php    # Verificación de sesión (AJAX)
-└── README.md            # Este archivo
+├── 📁 config/
+│   └── database.php          # Configuración de base de datos
+├── 📁 css/
+│   └── style.css             # Estilos principales
+├── 📁 database/
+│   ├── schema.sql            # Esquema de base de datos
+│   ├── insert_test_data.sql  # Datos de prueba
+│   ├── migrar_anio.sql       # Script de migración
+│   └── update_database.sql   # Actualizaciones de BD
+├── 📁 img/
+│   └── logo-escuela.png      # Logo institucional
+├── 📁 includes/
+│   ├── auth.php              # Autenticación
+│   ├── header.php            # Encabezado común
+│   └── footer.php            # Pie de página común
+├── 📄 index.php              # Dashboard principal
+├── 📄 login.php              # Página de inicio de sesión
+├── 📄 logout.php             # Cierre de sesión
+├── 📄 estudiantes.php        # Gestión de estudiantes
+├── 📄 estudiante_ficha.php   # Ficha individual
+├── 📄 cursos.php             # Gestión de cursos
+├── 📄 inasistencias.php      # Control de asistencia
+├── 📄 llamados.php           # Llamados de atención
+├── 📄 horarios.php           # Gestión de horarios
+├── 📄 equipo.php             # Equipo directivo
+├── 📄 reportes.php           # Generación de reportes
+├── 📄 export_inasistencias.php # Exportación de faltas
+├── 📄 export_llamados.php    # Exportación de llamados
+└── 📄 README.md              # Este archivo
 ```
 
-## 🛠️ Instalación
+## 🗄️ Esquema de Base de Datos
 
-### Requisitos
-- PHP 7.4 o superior
-- MySQL 5.7 o superior
-- Apache con mod_rewrite habilitado
-- Extensiones PHP: PDO, PDO_MySQL, OpenSSL
+El sistema utiliza una base de datos MySQL con las siguientes entidades principales:
+
+### Tablas Principales
+- **`usuarios`** - Personal del sistema con roles diferenciados
+- **`estudiantes`** - Información completa de los alumnos
+- **`cursos`** - Organización por año, división y turno
+- **`inasistencias`** - Registro detallado de faltas
+- **`llamados_atencion`** - Seguimiento disciplinario
+- **`horarios`** - Programación de clases
+- **`equipo_directivo`** - Personal administrativo
+
+### Relaciones Clave
+- Estudiantes → Cursos (pertenencia)
+- Inasistencias → Estudiantes (registro)
+- Llamados → Estudiantes (seguimiento)
+- Horarios → Cursos (programación)
+
+## 🚀 Instalación y Configuración
+
+### Requisitos Previos
+- **PHP 8.0** o superior
+- **MySQL 8.0** o superior
+- **Servidor web** (Apache/Nginx)
+- **Extensiones PHP**: PDO, PDO_MySQL
 
 ### Pasos de Instalación
 
 1. **Clonar el repositorio**
    ```bash
-   git clone [URL_DEL_REPOSITORIO]
-   cd Cuaderno-Digital2025-main
+   git clone https://github.com/tu-usuario/cuaderno-digital-eest2.git
+   cd cuaderno-digital-eest2
    ```
 
-2. **Configurar variables de entorno**
+2. **Configurar la base de datos**
    ```bash
-   cp config/env.example config/.env
-   # Editar config/.env con tus configuraciones
-   ```
-
-3. **Configurar base de datos**
-   ```sql
-   -- Crear base de datos
-   CREATE DATABASE cuaderno_digital_eest2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   # Crear base de datos
+   mysql -u root -p
+   CREATE DATABASE cuaderno_digital_eest2;
+   USE cuaderno_digital_eest2;
    
-   -- Importar esquema
+   # Importar esquema
    mysql -u root -p cuaderno_digital_eest2 < database/schema.sql
    
-   -- Insertar datos de prueba (opcional)
-   mysql -u root -p cuaderno_digital_eest2 < insert_test_data.sql
+   # Insertar datos de prueba (opcional)
+   mysql -u root -p cuaderno_digital_eest2 < database/insert_test_data.sql
    ```
 
-4. **Configurar permisos**
-   ```bash
-   chmod 755 logs/
-   chmod 755 uploads/
-   chmod 644 config/.env
+3. **Configurar conexión a BD**
+   ```php
+   // Editar config/database.php
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'cuaderno_digital_eest2');
+   define('DB_USER', 'tu_usuario');
+   define('DB_PASS', 'tu_password');
    ```
 
-5. **Configurar servidor web**
-   - Asegurar que mod_rewrite esté habilitado
-   - Configurar DocumentRoot al directorio del proyecto
-   - Verificar que .htaccess esté funcionando
+4. **Configurar servidor web**
+   - Apuntar el DocumentRoot al directorio del proyecto
+   - Asegurar permisos de escritura en directorios necesarios
 
-## 🔧 Configuración
+5. **Acceder al sistema**
+   - URL: `http://localhost/cuaderno-digital-eest2`
+   - Usuario por defecto: `admin`
+   - Contraseña: `admin123`
 
-### Variables de Entorno (.env)
+## 👥 Roles de Usuario
 
-```env
-# Base de datos
-DB_HOST=localhost
-DB_NAME=cuaderno_digital_eest2
-DB_USER=root
-DB_PASS=
+### 🔐 Administrador
+- **Acceso completo** a todas las funcionalidades
+- **Gestión de usuarios** del sistema
+- **Configuración general** de la aplicación
 
-# Aplicación
-APP_NAME="Cuaderno Digital EEST N°2"
-APP_URL=http://localhost
-APP_ENV=development
-APP_DEBUG=true
+### 👨‍💼 Directivo
+- **Dashboard completo** con estadísticas
+- **Reportes avanzados** y exportación
+- **Gestión de equipo** directivo
 
-# Seguridad
-SESSION_SECRET=your-secret-key-here
-PASSWORD_SALT=your-salt-here
+### 👩‍🏫 Preceptor
+- **Registro de inasistencias** y llamados
+- **Gestión de estudiantes** de sus cursos
+- **Reportes básicos** de asistencia
 
-# Logs
-LOG_LEVEL=info
+### 👩‍💻 Secretaria
+- **Registro de estudiantes** nuevos
+- **Actualización de datos** personales
+- **Generación de constancias**
+
+## 📊 Dashboard Principal
+
+El dashboard proporciona una visión completa del estado de la escuela:
+
+### 📈 Estadísticas en Tiempo Real
+- **Total de estudiantes** activos
+- **Cantidad de cursos** por turno
+- **Faltas del día** actual
+- **Llamados recientes** (últimos 7 días)
+- **Cumpleaños** del día
+
+### 🚀 Accesos Rápidos
+- **Por turno**: Mañana, Tarde, Contraturno
+- **Acciones frecuentes**: Registrar inasistencia, nuevo llamado
+- **Gestión**: Agregar estudiante, generar reporte
+
+### 📋 Actividad Reciente
+- **Últimas inasistencias** registradas
+- **Llamados de atención** recientes
+- **Notificaciones** importantes
+
+## 🔧 Mantenimiento y Actualizaciones
+
+### Migración de Año Escolar
+```sql
+-- Ejecutar al finalizar el año lectivo
+source database/migrar_anio.sql
 ```
 
-### Roles de Usuario
+### Actualizaciones de Base de Datos
+```sql
+-- Aplicar actualizaciones pendientes
+source database/update_database.sql
+```
 
-- **admin**: Acceso completo al sistema
-- **directivo**: Acceso a reportes y gestión
-- **docente**: Acceso básico a estudiantes y cursos
-
-## 📊 Funcionalidades
-
-### Dashboard
-- Estadísticas en tiempo real
-- Accesos rápidos por turno
-- Notificaciones del sistema
-- Actividad reciente
-
-### Gestión de Estudiantes
-- Registro completo de datos
-- Historial académico
-- Seguimiento de inasistencias
-- Fichas individuales
-
-### Control de Inasistencias
-- Registro diario de faltas
-- Justificaciones
-- Reportes por período
-- Exportación a Excel
-
-### Llamados de Atención
-- Registro de conductas
-- Seguimiento temporal
-- Notificaciones automáticas
-- Reportes de comportamiento
-
-### Reportes
-- Estadísticas generales
-- Reportes por curso
-- Exportación en múltiples formatos
-- Gráficos y visualizaciones
-
-## 🔍 Monitoreo y Logs
-
-El sistema registra automáticamente:
-- Inicios y cierres de sesión
-- Intentos de acceso fallidos
-- Actividades de usuarios
-- Errores de base de datos
-- Accesos no autorizados
-
-### Archivos de Log
-- `logs/app.log`: Log general de la aplicación
-- `logs/failed_logins.log`: Intentos de login fallidos
-- `logs/successful_logins.log`: Logins exitosos
-- `logs/logouts.log`: Cierres de sesión
-
-## 🚨 Seguridad
-
-### Medidas Implementadas
-- ✅ Autenticación segura con rate limiting
-- ✅ Protección CSRF en todos los formularios
-- ✅ Sanitización y validación de datos
-- ✅ Headers de seguridad HTTP
-- ✅ Logs de seguridad
-- ✅ Timeout de sesión automático
-- ✅ Verificación de IP
-- ✅ Hashing seguro de contraseñas
-
-### Recomendaciones de Producción
-1. Cambiar `SESSION_SECRET` y `PASSWORD_SALT` por valores únicos
-2. Configurar `APP_ENV=production`
-3. Deshabilitar `APP_DEBUG`
-4. Usar HTTPS
-5. Configurar backup automático de base de datos
-6. Monitorear logs regularmente
+### Respaldo de Datos
+```bash
+# Crear respaldo completo
+mysqldump -u root -p cuaderno_digital_eest2 > backup_$(date +%Y%m%d).sql
+```
 
 ## 🤝 Contribución
 
-1. Fork el proyecto
-2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
+¡Las contribuciones son bienvenidas! Para contribuir al proyecto:
+
+1. **Fork** el repositorio
+2. **Crea** una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. **Commit** tus cambios (`git commit -am 'Agregar nueva funcionalidad'`)
+4. **Push** a la rama (`git push origin feature/nueva-funcionalidad`)
+5. **Crea** un Pull Request
 
 ## 📝 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
 ## 📞 Soporte
 
-Para soporte técnico o consultas:
-- Email: [email@eest2.edu.ar]
-- Teléfono: [número de contacto]
-- Dirección: [dirección de la escuela]
+Para soporte técnico o consultas sobre el sistema:
 
-## 🔄 Actualizaciones
+- **Email**: soporte@eest2.edu.ar
+- **Teléfono**: (223) 1234-5678
+- **Horarios**: Lunes a Viernes de 8:00 a 18:00
 
-### v2.0.0 (Actual)
-- ✅ Sistema de seguridad mejorado
-- ✅ Reorganización de archivos
-- ✅ Logs de actividad
-- ✅ Páginas de error personalizadas
-- ✅ Validación mejorada
-- ✅ Interfaz de usuario actualizada
+## 🙏 Agradecimientos
 
-### Próximas características
-- [ ] API REST para integración
-- [ ] Notificaciones push
-- [ ] Backup automático
-- [ ] Dashboard móvil
-- [ ] Integración con sistemas externos
+- **Equipo Directivo** de E.E.S.T N°2 por la confianza
+- **Personal docente** vecchio por ser buena onda
 
 ---
 
-**Desarrollado para EEST N°2 "Educación y Trabajo"** 🏫
+**Desarrollado con ❤️ para la E.E.S.T N°2**
+
+*Sistema de Gestión Escolar - Versión 2025*
